@@ -1,0 +1,21 @@
+diff --git a/Checker.pm b/Checker.pm
+index d9484f6..2d17414 100644
+--- a/Checker.pm
++++ b/Checker.pm
+@@ -24,6 +24,7 @@ package TWiki::Configure::Checker;
+ use base qw(TWiki::Configure::UI);
+
+ use strict;
++use version;
+
+ require File::Spec;
+ require CGI;
+@@ -305,7 +306,7 @@ sub checkRCSProgram {
+             $version = '';
+             $err .= $this->ERROR($prog.' did not return a version number (or might not exist..)');
+         }
+-        if( $version =~ /^\d/ && $version < $rcsverRequired ) {
++        if( version->parse("v$version") < version->parse("v$rcsverRequired") ) {
+             # RCS too old
+             $err .= $prog.' is too old, upgrade to version '.
+               $rcsverRequired.' or higher.';
